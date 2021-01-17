@@ -10,12 +10,10 @@ comment=['FULL-URGENT','Nearly FULL','HALF-FULL','Nearly EMPTY','EMPTY']
 i=colour.index(c);
 st.write('Dustbin is:',comment[i])
 k1=st.button('SEND')
-st.success("Successfully Submitted")
+if(k1==True):
+    st.success("Successfully Submitted")
 
-
-import streamlit as st
 from webcam import webcam
-
 captured_image = webcam()
 if captured_image is None:
     st.write("Waiting for capture...")
