@@ -9,14 +9,9 @@ colour=['Black','Red','Blue','Grey','White']
 comment=['FULL-URGENT','Nearly FULL','HALF-FULL','Nearly EMPTY','EMPTY']
 i=colour.index(c);
 st.write('Dustbin is:',comment[i])
+
+file=st.file_uploader("Pic of inside dustbin")
 k1=st.button('SEND')
 if(k1==True):
     st.success("Successfully Submitted")
 
-from webcam import webcam
-captured_image = webcam()
-if captured_image is None:
-    st.write("Waiting for capture...")
-else:
-    st.write("Got an image from the webcam:")
-    st.image(captured_image)
