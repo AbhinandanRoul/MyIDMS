@@ -1,11 +1,10 @@
 # MyIDMS 
-___
+
 
 #### [MyIDMS](https://share.streamlit.io/abhinandanroul/myidms/main/Test/dustbin3.py) is a waste management system which is made to save time and bring efficiency in the process. 
 
 
 ## How to use
-___
 
 - Download the app [here](https://drive.google.com/file/d/1jV6gVDcEgWrXUAYXVJDQt3wrfp2GJHxS/view?usp=sharing). 
 - Everytime you go to your nearest dustbin to throw trash, Open the app and take a photo of the dustbin and choose the colour you see.
@@ -13,7 +12,7 @@ ___
 
 
 ## User Interface
-  ___
+
 - ## Webapp
  
   -  #####  Reporting tool
