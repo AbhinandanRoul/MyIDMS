@@ -33,4 +33,4 @@ In this way we will be able to save time :watch: and fuel :fuelpump:, thus impro
 
   - ## Android App
  
-<img src="https://i.imgur.com/9K2kAjD.jpg" width="500" height="700">
+<img src="https://i.imgur.com/9K2kAjD.jpg" width="500" height="800">
