@@ -12,8 +12,8 @@
 
 
 ## About the project
-Our solution collects data from the users which is sent to our data-base and a report of this will be send to the local municipal department. This will help in prioritization of garbage collection to the bins already filled.
-In this way we will be able to save time and fuel, thus improving the efficiency in the waste management.
+Our solution collects data :chart_with_upwards_trend: from the users which is sent to our data-base :file_folder: and a report :envelope: of this will be send to the local municipal department. This will help in prioritization of garbage collection to the bins :postbox: already filled.
+In this way we will be able to save time :watch: and fuel :fuelpump:, thus improving the efficiency :truck: in the waste management.
 
 ## User Interface
 
