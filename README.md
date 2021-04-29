@@ -11,22 +11,26 @@
 - click submit.
 
 
+## About the project
+Our solution collects data from the users which is sent to our data-base and a report of this will be send to the local municipal department. This will help in prioritization of garbage collection to the bins already filled.
+In this way we will be able to save time and fuel, thus improving the efficiency in the waste management.
+
 ## User Interface
 
 - ## Webapp
  
   -  #####  Reporting tool
 
-![screenshot](https://i.imgur.com/FSanyZa.png)
+ <img src="https://i.imgur.com/FSanyZa.png" width="500">
 -
  - #####  Service protal
 
-![screenshot](https://i.imgur.com/6dwXlAL.jpg)
+<img src="https://i.imgur.com/6dwXlAL.jpg" width="500">
 - 
  - ##### Admin protal
  
-    ![screenshot](https://i.imgur.com/4VXnttH.png)
+<img src="https://i.imgur.com/4VXnttH.png" width="500">
 
     - ## Android App
  
-    ![screenshot](https://i.imgur.com/9K2kAjD.jpg)
+<img src="https://i.imgur.com/9K2kAjD.jpg" width="500" height="500">
