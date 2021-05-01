@@ -199,7 +199,7 @@ elif add_selectbox=='Service Portal':
     st.title('Service Portal')
 
     BMC_ID = st.number_input('Enter your BMC ID')
-    pwd = st.text_input('Enter your password')
+    pwd = st.text_input('Enter your password',type='password')
 
     # Search only a particular location's dustbins
     placeholder1 = st.empty()
