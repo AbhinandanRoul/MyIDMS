@@ -1,9 +1,9 @@
 import streamlit as st,os,mysql.connector, datetime, geocoder
 
-hostname='sql4.freemysqlhosting.net'
-database='sql4406744'
-username='sql4406744'
-password='x8bM5CPH7M'
+hostname='sql6.freemysqlhosting.net'
+database='sql6405873'
+username='sql6405873'
+password='xZPFCiUUeq'
 
 add_selectbox = st.sidebar.selectbox(
     "NAVIGATION",  # Title of sidebar
