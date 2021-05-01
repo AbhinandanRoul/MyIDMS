@@ -5,28 +5,22 @@ database='sql6405873'
 username='sql6405873'
 password='xZPFCiUUeq'
 
-
-
-
-
 add_selectbox = st.sidebar.selectbox(
     "NAVIGATION",  # Title of sidebar
     (
-        "Reporting Tool", "Admin Dashboard")
+        "Reporting Tool", 'Service Portal',"Admin Dashboard")
     # List of all options in sidebar
 )
+threshold=6.5
 
 if add_selectbox=='Reporting Tool':
 
-
-
-
-
     st.title("MyIDMS")
     st.header("Intelligent Dustbin Management System")
-
     email=st.text_input('Enter your email')
     dustbinID=st.number_input('Enter dustbin ID')
+    #st.selectbox('Select area', area)
+
     st.write("Upto which colour is the dustbin filled?")
     c=st.selectbox('Which colour do you see?', ('Black','Red','Blue','Grey','White'))
     colour=['Black','Red','Blue','Grey','White']
@@ -60,7 +54,7 @@ if add_selectbox=='Reporting Tool':
             return binaryData
         # ------------------------------------------------------
 
-        # -------------------------------------------- SQL Code to insert data ------------------------------------------
+        # -------------------------------------------- SQL Code to insert data ----------------------------------------
         def insertBLOB(email, dustbin_status, photo, date, time, loc, dustbinID):
             mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
             my_cursor = mydb.cursor()
@@ -117,44 +111,41 @@ if add_selectbox=='Reporting Tool':
 
         # addDustbin(dustbinID)
         updateDustbin(dustbinID, dustbin_weight)
-
+# -------------------------------------------------------------------------------------------------------------------
 elif add_selectbox=='Admin Dashboard':
     import streamlit as st, os, mysql.connector, datetime
     import pandas as pd
 
-    hostname = 'sql6.freemysqlhosting.net'
-    database = 'sql6405873'
-    username = 'sql6405873'
-    password = 'xZPFCiUUeq'
-
     st.title('Admin Dashboard')
-    # dustbinID=[]; weight=[]; reports_number=[]; AvgWt=[];
+    arealist = ['SHOW ALL', 'Rasulgarh', 'Jagamara', 'Khandagiri', 'Chandrasekharpur', 'Rail Vihar', 'Patia',
+                'Infocity', 'Mancheswar', 'Jaydev Vihar', 'Dumduma', 'Kalinga Vihar', 'Patrapada', 'Pokhariput',
+                'IRC Village', 'Nayapalli', 'Bapuji nagar', 'Ashok nagar', 'Kharabela nagar', 'Acharya vihar',
+                'Bapuji nagar', 'Jharpada', 'Kalpana Square', 'BJB nagar']
+    # arealist.sort() ## Uncomment this to sort the area list
+    localtiy = st.selectbox('Select Area', arealist)
     cleanID = st.number_input('Enter ID of cleaned dustbin')
     k = st.button('Clean')
     placeholder = st.empty()
 
 
     def showDustbinlist():
-        dustbinID = [];
-        weight = [];
-        reports_number = [];
-        AvgWt = [];
+        dustbinID = [];area = [];weight = []; reports_number = []; AvgWt = [];
         mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
         cursor = mydb.cursor()
         cursor.execute("SELECT * FROM dustbinlist")
         myresult = cursor.fetchall()
-        # st.write('DustbinID,','Weight,','Reports,','Avg. Wt')
         for x in myresult:
             # st.write(x[0],x[1],x[2],x[3])
             dustbinID.append(x[0])
-            weight.append(x[1])
-            reports_number.append(x[2])
-            AvgWt.append(x[3])
-        dict = {'DustbinID': dustbinID, 'Weighted Score': weight, 'No. of Reports': reports_number,
+            area.append(x[1])
+            weight.append(x[2])
+            reports_number.append(x[3])
+            AvgWt.append(x[4])
+        dict = {'DustbinID': dustbinID, 'Locality': area, 'Weighted Score': weight, 'No. of Reports': reports_number,
                 'Average Weighted Score': AvgWt}
         df = pd.DataFrame(dict)
         df = df.sort_values(by='Average Weighted Score', ascending=False)
-        placeholder.write(df)
+        placeholder.table(df)
 
 
     def cleanDustbin(cleanID):
@@ -166,9 +157,165 @@ elif add_selectbox=='Admin Dashboard':
         connection.commit()
 
 
-    showDustbinlist()
+    def showDustbinlistbylocality(locality):
+        dustbinID = [];
+        area = [];
+        weight = [];
+        reports_number = [];
+        AvgWt = [];
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        cursor.execute("SELECT * FROM dustbinlist")
+        myresult = cursor.fetchall()
+        for x in myresult:
+            # st.write(x[0],x[1],x[2],x[3])
+            if (x[1] == locality):
+                dustbinID.append(x[0])
+                area.append(x[1])
+                weight.append(x[2])
+                reports_number.append(x[3])
+                AvgWt.append(x[4])
+        dict = {'DustbinID': dustbinID, 'Locality': area, 'Weighted Score': weight, 'No. of Reports': reports_number,
+                'Average Weighted Score': AvgWt}
+        df = pd.DataFrame(dict)
+        df = df.sort_values(by='Average Weighted Score', ascending=False)
+        placeholder.table(df)  # placeholder.write(df)
+
+
+    # showDustbinlist()
+    if (localtiy == 'SHOW ALL'):
+        showDustbinlist()
+    else:
+        showDustbinlistbylocality(localtiy)
 
     if (k == True):
         st.success('Dustbin {} is cleaned, UPDATED'.format(cleanID))
         cleanDustbin(cleanID)
-        showDustbinlist()
+        showDustbinlistbylocality(localtiy)
+
+
+elif add_selectbox=='Service Portal':
+    import pandas as pd
+    st.title('Service Portal')
+
+    BMC_ID = st.number_input('Enter your BMC ID')
+    pwd = st.text_input('Enter your password',type='password')
+
+    # Search only a particular location's dustbins
+    placeholder1 = st.empty()
+    placeholder2 = st.empty()
+
+    placeholder31=st.empty();
+    placeholder3 = st.empty()
+    placeholder4 = st.empty()
+    placeholder5 = st.empty()
+
+
+    def showDustbinlist(locality):
+        dustbinID = [];
+        area = [];
+        weight = [];
+        reports_number = [];
+        AvgWt = [];
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        cursor.execute("SELECT * FROM dustbinlist")
+        myresult = cursor.fetchall()
+        for x in myresult:
+            # st.write(x[0],x[1],x[2],x[3])
+            if (x[1] == locality):
+                dustbinID.append(x[0])
+                area.append(x[1])
+                weight.append(x[2])
+                reports_number.append(x[3])
+                AvgWt.append(x[4])
+        dict = {'DustbinID': dustbinID, 'Locality': area, 'Weighted Score': weight, 'No. of Reports': reports_number,
+                'Average Weighted Score': AvgWt}
+        df = pd.DataFrame(dict)
+        df = df.sort_values(by='Average Weighted Score', ascending=False)
+        placeholder3.table(df)  # placeholder.write(df)
+
+
+    def passwordvalidation():
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        sqlfind = "select password from workerlogin where BMC_ID={}".format(BMC_ID)
+        cursor.execute(sqlfind)
+        result = cursor.fetchall()
+        return (result[0][0])
+
+
+    def login():
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        sqlfind = "select BMC_ID, password, area, name from workerlogin where BMC_ID={}".format(BMC_ID)
+        cursor.execute(sqlfind)
+        result = cursor.fetchall()
+        for x in result:
+            placeholder1.header("Hello {}".format(x[3]))
+            placeholder2.subheader("You are in charge of {} area ".format(x[2]))
+
+
+    def locality():
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        sqlfind = "select area from workerlogin where BMC_ID={}".format(BMC_ID)
+        cursor.execute(sqlfind)
+        result = cursor.fetchall()
+        return result[0][0]
+
+
+    def cleanDustbin(cleanID):
+        connection = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = connection.cursor()
+        sql = "update dustbinlist set weight={weight}, reports_number={reports_number},AvgWt={AvgWt} where dustbinID={dustbinID}".format(
+            weight=0, reports_number=0, AvgWt=0, dustbinID=cleanID)
+        cursor.execute(sql)
+        connection.commit()
+
+    def showpriorityDustbinlist(locality):
+        placeholder4.subheader('Priority List')
+        dustbinID = [];
+        area = [];
+        weight = [];
+        reports_number = [];
+        AvgWt = [];
+        mydb = mysql.connector.connect(host=hostname, database=database, user=username, password=password)
+        cursor = mydb.cursor()
+        cursor.execute("SELECT * FROM dustbinlist")
+        myresult = cursor.fetchall()
+        for x in myresult:
+            # st.write(x[0],x[1],x[2],x[3])
+            if x[1] == locality and x[4]>threshold:
+                dustbinID.append(x[0])
+                area.append(x[1])
+                weight.append(x[2])
+                reports_number.append(x[3])
+                AvgWt.append(x[4])
+        dict = {'DustbinID': dustbinID, 'Locality': area, 'Weighted Score': weight, 'No. of Reports': reports_number,
+                'Average Weighted Score': AvgWt}
+        df = pd.DataFrame(dict)
+        df = df.sort_values(by='Average Weighted Score', ascending=False)
+        placeholder5.table(df)  # placeholder.write(df)
+
+
+    # showDustbinlist()
+    # login()
+    if passwordvalidation() == pwd:
+        login()
+        with placeholder31.beta_container():
+            disp = st.radio(
+                "Display",
+                ('Cleaning Required', 'All Bins'))
+        if disp=='Cleaning Required':
+            showpriorityDustbinlist(locality())
+        elif disp=='All Bins':
+            showDustbinlist(locality())
+        cleanID = st.number_input('Enter dustbinID to clean')
+        if st.button('CLEAN'):
+            cleanDustbin(cleanID)
+            with placeholder31.beta_container():
+                if disp == 'Cleaning Required':
+                    showpriorityDustbinlist(locality())
+                elif disp == 'All Bins':
+                    showDustbinlist(locality())
