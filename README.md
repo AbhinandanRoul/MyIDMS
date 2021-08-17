@@ -1,7 +1,7 @@
 # MyIDMS 
 
 
-#### [MyIDMS](https://share.streamlit.io/abhinandanroul/myidms/main/Test/dustbin3.py) is a waste management system which is made to save time and bring efficiency in the process. 
+#### [MyIDMS](https://share.streamlit.io/abhinandanroul/myidms/main/Test/dustbin3.py) is a smart waste management system which is made to save time and bring efficiency in the process. 
 
 
 ## How to use
